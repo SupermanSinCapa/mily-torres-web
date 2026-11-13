@@ -43,8 +43,9 @@ npm run preview   # sirve /dist localmente
 
 ## Imágenes
 
-Las 4 imágenes (banner, antes/después y testimonios) se cargan desde el almacenamiento de Readdy, igual que en la web anterior.
-Si esa cuenta se cancela, hay que descargarlas a `public/` y cambiar las URLs en `index.html`.
+Las imágenes están en `public/img/` (banner, perfil antes/después y testimonios). Para cambiar una, reemplaza el archivo con el mismo nombre o cambia la ruta `/img/…` en `index.html`.
+
+La imagen para compartir en redes (`og:image`) usa la URL completa de GitHub Pages; si se conecta un dominio propio, hay que actualizarla en `index.html`.
 
 ## Publicar
 
