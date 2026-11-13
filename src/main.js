@@ -1,10 +1,12 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Draggable } from 'gsap/Draggable';
+import { InertiaPlugin } from 'gsap/InertiaPlugin';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import './style.css';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, Draggable, InertiaPlugin);
 
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
@@ -21,7 +23,7 @@ const fmt = (n, decimals = 0) => {
   return dec ? `${grouped},${dec}` : grouped;
 };
 
-// Envuelve cada palabra en una máscara para animarla (respeta <em>)
+// Envuelve cada palabra en una máscara (respeta <mark>, una marca por palabra)
 function splitWords(el) {
   const frag = document.createDocumentFragment();
   const wrap = (node) => {
@@ -61,61 +63,60 @@ function countUp(el) {
   const state = { v: 0 };
   gsap.to(state, {
     v: end,
-    duration: 2,
+    duration: 1.8,
     ease: 'power3.out',
     onUpdate: () => (el.textContent = fmt(state.v, decimals)),
   });
 }
 
 /* -----------------------------------------------------------
-   Scroll suave (Lenis) + ScrollTrigger
+   Scroll suave
 ----------------------------------------------------------- */
 let lenis = null;
 if (!reduceMotion) {
-  lenis = new Lenis({ duration: 1.15, smoothWheel: true });
+  lenis = new Lenis({ duration: 1.1, smoothWheel: true });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
 }
-
-function scrollToTarget(target) {
-  if (lenis) lenis.scrollTo(target, { offset: -72, duration: 1.4 });
+const scrollToTarget = (target) => {
+  if (lenis) lenis.scrollTo(target, { offset: -70, duration: 1.4 });
   else target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-}
+};
 
 /* -----------------------------------------------------------
-   Menú móvil
+   Menú móvil y enlaces internos
 ----------------------------------------------------------- */
-const menuToggle = $('.menu-toggle');
+const header = $('.header');
+const menuBtn = $('.menu-btn');
 const mobileMenu = $('#menu-movil');
 
 function openMenu() {
   document.body.classList.add('menu-open');
-  menuToggle.setAttribute('aria-expanded', 'true');
-  menuToggle.setAttribute('aria-label', 'Cerrar menú');
+  menuBtn.setAttribute('aria-expanded', 'true');
+  menuBtn.setAttribute('aria-label', 'Cerrar menú');
   mobileMenu.inert = false;
-  $('.nav').classList.remove('is-hidden');
+  header.classList.remove('is-hidden');
   lenis?.stop();
   if (!reduceMotion) {
     gsap.fromTo(
       $$('.mobile-menu nav a, .mobile-menu-foot'),
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.9, stagger: 0.06, ease: 'expo.out', delay: 0.2 },
+      { yPercent: 60, opacity: 0 },
+      { yPercent: 0, opacity: 1, duration: 0.9, stagger: 0.05, ease: 'expo.out', delay: 0.25 },
     );
   }
 }
 function closeMenu() {
   if (!document.body.classList.contains('menu-open')) return;
   document.body.classList.remove('menu-open');
-  menuToggle.setAttribute('aria-expanded', 'false');
-  menuToggle.setAttribute('aria-label', 'Abrir menú');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  menuBtn.setAttribute('aria-label', 'Abrir menú');
   mobileMenu.inert = true;
   lenis?.start();
 }
-menuToggle?.addEventListener('click', () => (document.body.classList.contains('menu-open') ? closeMenu() : openMenu()));
+menuBtn?.addEventListener('click', () => (document.body.classList.contains('menu-open') ? closeMenu() : openMenu()));
 document.addEventListener('keydown', (e) => e.key === 'Escape' && closeMenu());
 
-// Enlaces internos
 $$('a[href^="#"]').forEach((link) => {
   link.addEventListener('click', (e) => {
     const id = link.getAttribute('href');
@@ -129,30 +130,54 @@ $$('a[href^="#"]').forEach((link) => {
 });
 
 /* -----------------------------------------------------------
-   Navegación, progreso y botón de WhatsApp
+   Cabecera, botón de WhatsApp
 ----------------------------------------------------------- */
-const nav = $('.nav');
 ScrollTrigger.create({
   start: 0,
   end: 'max',
   onUpdate: (self) => {
     const y = self.scroll();
-    nav.classList.toggle('is-scrolled', y > 40);
-    const hide = self.direction === 1 && y > 500 && !document.body.classList.contains('menu-open');
-    nav.classList.toggle('is-hidden', hide);
+    header.classList.toggle('is-scrolled', y > 30);
+    header.classList.toggle('is-hidden', self.direction === 1 && y > 600 && !document.body.classList.contains('menu-open'));
   },
 });
-
-if (!reduceMotion) {
-  gsap.to('.progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
-}
 
 const waFloat = $('.wa-float');
 ScrollTrigger.create({
   trigger: '.hero',
-  start: 'bottom 70%',
+  start: 'bottom 75%',
   onEnter: () => waFloat.classList.add('is-visible'),
   onLeaveBack: () => waFloat.classList.remove('is-visible'),
+});
+
+/* -----------------------------------------------------------
+   Comparador antes / después
+----------------------------------------------------------- */
+const compare = $('[data-compare]');
+const compareRange = compare && $('.compare-range', compare);
+const setCompare = (v) => {
+  compare.style.setProperty('--pos', `${v}%`);
+  compareRange.value = Math.round(v);
+};
+compareRange?.addEventListener('input', (e) => setCompare(e.target.value));
+
+/* -----------------------------------------------------------
+   Stickers arrastrables
+----------------------------------------------------------- */
+Draggable.create('.sticker', {
+  type: 'x,y',
+  bounds: '.hero',
+  inertia: true,
+  zIndexBoost: true,
+  onPress() {
+    gsap.to(this.target, { scale: 1.08, duration: 0.2 });
+  },
+  onRelease() {
+    gsap.to(this.target, { scale: 1, duration: 0.35, ease: 'back.out(2)' });
+  },
+  onDragStart() {
+    gsap.to('.hand-hero', { opacity: 0, duration: 0.3 });
+  },
 });
 
 /* -----------------------------------------------------------
@@ -163,120 +188,189 @@ const counters = $$('[data-count]');
 if (reduceMotion) {
   $('.loader')?.remove();
 } else {
+  // Preparación
   $$('[data-split]').forEach(splitWords);
   counters.forEach((el) => (el.textContent = fmt(0, parseInt(el.dataset.decimals || '0', 10))));
+  gsap.set('.hero-title mark, [data-split] mark', { '--mk': '0%' });
 
-  // Intro
+  // 1) Método: scroll horizontal fijado (se crea primero para que el resto de triggers mida bien)
+  const mm = gsap.matchMedia();
+  mm.add('(min-width: 1024px)', () => {
+    const hs = $('.hscroll');
+    const track = $('.hscroll-track');
+    hs.classList.add('is-horizontal');
+    const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
+    gsap.to(track, {
+      x: () => -dist(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: hs,
+        start: 'top top',
+        end: () => `+=${dist()}`,
+        pin: true,
+        scrub: 0.6,
+        invalidateOnRefresh: true,
+      },
+    });
+    return () => {
+      hs.classList.remove('is-horizontal');
+      gsap.set(track, { clearProps: 'transform' });
+    };
+  });
+
+  // 2) Intro
   const intro = gsap.timeline({ defaults: { ease: 'expo.out' } });
   const loader = $('.loader');
   if (loader) {
     lenis?.stop();
+    const num = $('[data-loader-num]');
+    const c = { v: 0 };
     intro
-      .from('.loader-word > *', { yPercent: 115, duration: 1.1, stagger: 0.08 })
-      .to('.loader-line', { scaleX: 1, duration: 0.9, ease: 'power2.inOut' }, '-=0.7')
-      .to('.loader-word > *', { yPercent: -115, duration: 0.7, stagger: 0.05, ease: 'expo.in' }, '+=0.1')
-      .to(loader, { yPercent: -100, duration: 1.1, ease: 'expo.inOut' }, '-=0.3')
+      .from('.loader-top, .loader-name', { opacity: 0, duration: 0.6 })
+      .to(c, { v: 100, duration: 1.3, ease: 'power2.inOut', onUpdate: () => (num.textContent = Math.round(c.v)) }, 0)
+      .to(loader, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1, ease: 'expo.inOut' }, '+=0.1')
       .add(() => {
         loader.remove();
         lenis?.start();
       });
   }
   intro
-    .from('.nav-inner', { y: -24, opacity: 0, duration: 1.2 }, '-=0.55')
-    .from('.hero-title .w-i', { yPercent: 110, duration: 1.3, stagger: 0.06 }, '<')
-    .from(['.hero-top', '.hero-sub', '.hero-ctas'], { y: 26, opacity: 0, duration: 1.1, stagger: 0.1 }, '-=1.05')
-    .add(() => countUp($('.eyebrow-pill [data-count]')), '<')
-    .from('.showcase-frame', { y: 90, opacity: 0, duration: 1.6 }, '-=0.95')
-    .from('.chip', { scale: 0.6, opacity: 0, duration: 1, stagger: 0.12, ease: 'back.out(1.7)' }, '-=1');
+    .from('.nav', { y: -20, opacity: 0, duration: 1 }, '-=0.45')
+    .from('.hero-title .line > span', { yPercent: 115, duration: 1.3, stagger: 0.08 }, '<')
+    .from('.hero-label', { opacity: 0, y: 12, duration: 0.9 }, '<0.2')
+    .to('.hero-title mark', { '--mk': '100%', duration: 0.8, stagger: 0.15, ease: 'power3.inOut' }, '-=0.6')
+    .from('.hero-bottom', { opacity: 0, y: 30, duration: 1.1 }, '<')
+    .from('.reel', { y: 140, rotation: 8, opacity: 0, duration: 1.5 }, '-=1.4')
+    .from('.sticker', { scale: 0, rotation: -40, duration: 0.9, stagger: 0.12, ease: 'back.out(1.8)' }, '-=0.8')
+    .from('.hand-hero', { opacity: 0, x: -10, duration: 0.6 }, '-=0.3');
 
-  // Títulos palabra por palabra
-  $$('[data-split]')
-    .filter((el) => !el.closest('.hero'))
-    .forEach((el) => {
-      gsap.from($$('.w-i', el), {
-        yPercent: 110,
-        duration: 1.2,
-        ease: 'expo.out',
-        stagger: 0.045,
-        scrollTrigger: { trigger: el, start: 'top 88%' },
-      });
-    });
+  // Parallax del reel
+  gsap.to('.hero-visual', {
+    yPercent: -12,
+    ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
+  });
 
-  // Aparición suave
+  // 3) Títulos palabra por palabra + resaltado
+  $$('[data-split]').forEach((el) => {
+    const tl = gsap.timeline({ scrollTrigger: { trigger: el, start: 'top 86%' } });
+    tl.from($$('.w-i', el), { yPercent: 115, duration: 1.1, ease: 'expo.out', stagger: 0.04 });
+    const marks = $$('mark', el);
+    if (marks.length) tl.to(marks, { '--mk': '100%', duration: 0.7, stagger: 0.1, ease: 'power3.inOut' }, '-=0.6');
+  });
+
+  // 4) Apariciones genéricas
   $$('[data-reveal]').forEach((el) => {
     gsap.from(el, {
-      y: 48,
+      y: 40,
       opacity: 0,
-      duration: 1.2,
+      duration: 1.1,
       ease: 'expo.out',
       clearProps: 'transform,opacity',
       scrollTrigger: { trigger: el, start: 'top 90%' },
     });
   });
-
-  // Grupos escalonados
   $$('[data-stagger]').forEach((group) => {
     gsap.from(group.children, {
-      y: 56,
+      y: 60,
       opacity: 0,
       duration: 1.1,
       ease: 'expo.out',
-      stagger: 0.09,
+      stagger: 0.08,
       clearProps: 'transform,opacity',
       scrollTrigger: { trigger: group, start: 'top 86%' },
     });
   });
 
-  // Contadores
-  counters
-    .filter((el) => !('manual' in el.dataset))
-    .forEach((el) => {
-      ScrollTrigger.create({ trigger: el, start: 'top 92%', once: true, onEnter: () => countUp(el) });
+  // 5) Contadores
+  counters.forEach((el) => {
+    ScrollTrigger.create({ trigger: el, start: 'top 92%', once: true, onEnter: () => countUp(el) });
+  });
+
+  // 6) Cifras
+  gsap.from('.stat', {
+    yPercent: 30,
+    opacity: 0,
+    duration: 1,
+    ease: 'expo.out',
+    stagger: 0.08,
+    clearProps: 'transform,opacity',
+    scrollTrigger: { trigger: '.stats', start: 'top 88%' },
+  });
+
+  // 7) Comparador: barrido automático la primera vez
+  if (compare) {
+    const s = { v: 50 };
+    gsap
+      .timeline({ scrollTrigger: { trigger: compare, start: 'top 70%' } })
+      .from(compare, { y: 60, rotation: 3, opacity: 0, duration: 1.2, ease: 'expo.out' })
+      .fromTo(s, { v: 94 }, { v: 10, duration: 1.6, ease: 'power2.inOut', onUpdate: () => setCompare(s.v) }, '-=0.6')
+      .to(s, { v: 50, duration: 1.2, ease: 'power3.out', onUpdate: () => setCompare(s.v) });
+  }
+
+  // 8) Notificaciones
+  $$('.notif').forEach((n, i) => {
+    gsap.from(n, {
+      x: 90,
+      rotation: i % 2 ? -3 : 3,
+      opacity: 0,
+      duration: 1,
+      ease: 'expo.out',
+      clearProps: 'transform,opacity',
+      scrollTrigger: { trigger: n, start: 'top 90%' },
     });
-
-  // Imagen principal: se expande al hacer scroll
-  const mm = gsap.matchMedia();
-  mm.add('(min-width: 768px)', () => {
-    const st = { trigger: '.showcase', start: 'top 80%', end: 'bottom 35%', scrub: 0.6 };
-    gsap.fromTo(
-      '.showcase-frame',
-      { clipPath: 'inset(0% 8% 0% 8% round 36px)' },
-      { clipPath: 'inset(0% 0% 0% 0% round 28px)', ease: 'none', scrollTrigger: st },
-    );
-    gsap.fromTo('.showcase-frame img', { scale: 1.07 }, { scale: 1, ease: 'none', scrollTrigger: { ...st } });
-    gsap.to('.chips', { yPercent: -10, ease: 'none', scrollTrigger: { ...st, end: 'bottom top' } });
-  });
-  mm.add('(max-width: 767px)', () => {
-    gsap.fromTo(
-      '.showcase-frame img',
-      { scale: 1.06 },
-      { scale: 1, ease: 'none', scrollTrigger: { trigger: '.showcase', start: 'top bottom', end: 'bottom top', scrub: true } },
-    );
   });
 
-  // Antes / después
-  const baTl = gsap.timeline({ scrollTrigger: { trigger: '.ba', start: 'top 78%' }, defaults: { ease: 'expo.out', duration: 1.4 } });
-  baTl
-    .from('.ba-before', { x: -90, rotate: -8, opacity: 0 })
-    .from('.ba-after', { x: 90, rotate: 8, opacity: 0 }, '<0.1')
-    .from('.ba-mid', { scale: 0.7, opacity: 0 }, '<0.25')
-    .from('.ba-arrow', { x: -30, opacity: 0, duration: 1 }, '<0.3');
-
-  // Parallax sutil
-  $$('.ba-img img, .testi-img img').forEach((img) => {
-    gsap.fromTo(
-      img,
-      { yPercent: -1.5, scale: 1.035 },
-      {
-        yPercent: 1.5,
-        scale: 1.035,
-        ease: 'none',
-        scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
-      },
-    );
+  // 9) Visuales del método
+  gsap.from('.viz-cal i', {
+    scale: 0,
+    duration: 0.5,
+    ease: 'back.out(2)',
+    stagger: { each: 0.02, from: 'random' },
+    scrollTrigger: { trigger: '.hscroll', start: 'top 70%' },
+  });
+  gsap.from('.sc-row i', {
+    scaleX: 0,
+    transformOrigin: 'left center',
+    duration: 0.8,
+    ease: 'expo.out',
+    stagger: 0.06,
+    scrollTrigger: { trigger: '.hscroll', start: 'top 60%' },
   });
 
-  // Botones magnéticos
+  // 10) Testimonios
+  gsap.fromTo(
+    '.testi-card',
+    { y: 90, scale: 0.9 },
+    { y: 0, scale: 1, ease: 'none', scrollTrigger: { trigger: '.testi-card', start: 'top bottom', end: 'top 35%', scrub: true } },
+  );
+
+  // 11) Pack Estrella
+  gsap.from('.star', {
+    y: 80,
+    opacity: 0,
+    duration: 1.2,
+    ease: 'expo.out',
+    clearProps: 'transform,opacity',
+    scrollTrigger: { trigger: '.star', start: 'top 85%' },
+  });
+
+  // 12) Final y footer
+  gsap.from('.final-big .line > span', {
+    yPercent: 115,
+    duration: 1.3,
+    ease: 'expo.out',
+    stagger: 0.1,
+    scrollTrigger: { trigger: '.final-big', start: 'top 85%' },
+  });
+  gsap.from('.footer-big span', {
+    yPercent: 100,
+    duration: 1.4,
+    ease: 'expo.out',
+    scrollTrigger: { trigger: '.footer-big', start: 'top 95%' },
+  });
+
+  // 13) Botones magnéticos
   if (finePointer) {
     $$('[data-magnetic]').forEach((el) => {
       const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3' });
@@ -292,17 +386,26 @@ if (reduceMotion) {
       });
     });
   }
-}
 
-// Luz que sigue al cursor en las tarjetas de planes
-if (finePointer) {
-  $$('.plan').forEach((card) => {
-    card.addEventListener('pointermove', (e) => {
-      const r = card.getBoundingClientRect();
-      card.style.setProperty('--mx', `${e.clientX - r.left}px`);
-      card.style.setProperty('--my', `${e.clientY - r.top}px`);
+  // 14) Cursor personalizado
+  if (finePointer) {
+    const cur = $('.cursor');
+    const label = $('.cursor-label', cur);
+    gsap.set(cur, { x: -100, y: -100 });
+    const xTo = gsap.quickTo(cur, 'x', { duration: 0.3, ease: 'power3' });
+    const yTo = gsap.quickTo(cur, 'y', { duration: 0.3, ease: 'power3' });
+    window.addEventListener('pointermove', (e) => {
+      xTo(e.clientX);
+      yTo(e.clientY);
     });
-  });
+    document.addEventListener('pointerover', (e) => {
+      const t = e.target.closest('a, button, summary, input, [data-cursor]');
+      cur.classList.toggle('is-hover', !!t);
+      label.textContent = t?.dataset.cursor || '';
+    });
+    document.documentElement.addEventListener('mouseleave', () => cur.classList.add('is-hidden'));
+    document.documentElement.addEventListener('mouseenter', () => cur.classList.remove('is-hidden'));
+  }
 }
 
 /* -----------------------------------------------------------
@@ -324,7 +427,7 @@ $$('.qa').forEach((item) => {
       gsap.to(body, {
         height: 0,
         opacity: 0,
-        duration: 0.5,
+        duration: 0.45,
         ease: 'power3.inOut',
         onComplete: () => {
           item.open = false;
@@ -340,7 +443,7 @@ $$('.qa').forEach((item) => {
       gsap.fromTo(
         body,
         { height: 0, opacity: 0 },
-        { height: 'auto', opacity: 1, duration: 0.7, ease: 'expo.out', clearProps: 'height,opacity', onComplete: () => ScrollTrigger.refresh() },
+        { height: 'auto', opacity: 1, duration: 0.65, ease: 'expo.out', clearProps: 'height,opacity', onComplete: () => ScrollTrigger.refresh() },
       );
     }
   });
@@ -350,7 +453,7 @@ $$('.qa').forEach((item) => {
    Cuenta regresiva Pack Estrella (48 h por visitante)
 ----------------------------------------------------------- */
 (function countdown() {
-  const box = $('.countdown');
+  const box = $('.cd');
   if (!box) return;
   const KEY = 'packEstrellaDeadline';
   const SPAN = 48 * 60 * 60 * 1000;
@@ -380,7 +483,7 @@ $$('.qa').forEach((item) => {
       const txt = pad(v);
       if (els[k].textContent !== txt) {
         els[k].textContent = txt;
-        if (k === 's' && !reduceMotion) gsap.fromTo(els[k], { yPercent: -40, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.45, ease: 'power3.out' });
+        if (k === 's' && !reduceMotion) gsap.fromTo(els[k], { yPercent: -50, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.4, ease: 'power3.out' });
       }
     });
   };
@@ -389,11 +492,11 @@ $$('.qa').forEach((item) => {
 })();
 
 /* -----------------------------------------------------------
-   Lightbox de testimonios
+   Visor de testimonios
 ----------------------------------------------------------- */
 (function lightbox() {
   const dialog = $('#lightbox');
-  const opener = $('.testi-open');
+  const opener = $('.testi-card');
   if (!dialog || !opener || typeof dialog.showModal !== 'function') return;
   const img = $('.lb-stage img', dialog);
   const level = $('.lb-level', dialog);
@@ -426,6 +529,5 @@ $$('.qa').forEach((item) => {
    Varios
 ----------------------------------------------------------- */
 $$('[data-year]').forEach((el) => (el.textContent = new Date().getFullYear()));
-
 window.addEventListener('load', () => ScrollTrigger.refresh());
 document.fonts?.ready.then(() => ScrollTrigger.refresh());
