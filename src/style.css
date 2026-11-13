@@ -1,26 +1,35 @@
 /* =========================================================
-   Mily Torres — Creator Studio
-   Tinta · hueso · lima eléctrica
+   Mily Torres — Contenido que Vende
+   Paleta y tipografía de marca de Mily:
+   rosa #F464BE · ciruela #19182C · fondos rosados · dorado #BC9142
+   Italiana (títulos) + Poppins (texto)
    ========================================================= */
 
 :root {
-  --ink: #0d0d0d;
-  --ink-2: #171717;
-  --ink-3: #222;
-  --bone: #f1ede4;
-  --paper: #f8f6f1;
+  /* Oscuros (secondary / foreground de su marca) */
+  --ink: #19182c;
+  --ink-2: #201f34;
+  --ink-3: #2c2b40;
+  /* Fondos (background de su marca) */
+  --bg: #fff1f8;
+  --bg-2: #fff8fc;
   --white: #fff;
-  --lime: #d4ff3a;
-  --lime-2: #c3f01f;
-  --mute: #66625a;
-  --mute-inv: #a19c92;
-  --line: rgba(13, 13, 13, 0.14);
-  --line-inv: rgba(241, 237, 228, 0.14);
+  /* Rosa principal (primary de su marca) */
+  --accent: #f464be;
+  --accent-2: #d749a4;
+  --accent-soft: #ffc0e5;
+  /* Dorado de sus palabras destacadas */
+  --gold: #bc9142;
+  /* Textos */
+  --mute: #6d6d7d;
+  --mute-inv: #b0b0bb;
+  --line: rgba(25, 24, 44, 0.14);
+  --line-inv: rgba(255, 241, 248, 0.14);
 
-  --display: 'Bricolage Grotesque', 'Arial Narrow', Impact, sans-serif;
-  --sans: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --mono: 'Geist Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
-  --hand: 'Caveat', 'Segoe Print', cursive;
+  --display: 'Italiana', 'Didot', 'Bodoni MT', serif;
+  --sans: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'Poppins', system-ui, sans-serif; /* etiquetas: Poppins en mayúsculas */
+  --hand: 'Italiana', serif;
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --pad: clamp(16px, 4vw, 56px);
@@ -38,13 +47,14 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  font-synthesis: none; /* Italiana solo tiene peso 400: sin negritas falsas */
 }
 html,
 body {
   margin: 0;
 }
 body {
-  background: var(--bone);
+  background: var(--bg);
   color: var(--ink);
   font-family: var(--sans);
   font-size: 16px;
@@ -85,13 +95,13 @@ ol {
   list-style: none;
 }
 ::selection {
-  background: var(--lime);
+  background: var(--accent-soft);
   color: var(--ink);
 }
 :focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
-  box-shadow: 0 0 0 5px var(--lime);
+  box-shadow: 0 0 0 5px var(--accent);
 }
 .ic {
   width: 1.05em;
@@ -116,16 +126,15 @@ main {
   font-family: var(--mono);
   font-size: 0.74rem;
   font-weight: 500;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .h2 {
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 700;
-  font-size: clamp(2.8rem, 6.6vw, 7rem);
-  line-height: 0.9;
-  letter-spacing: -0.015em;
+  font-weight: 400;
+  font-size: clamp(2.5rem, 5.2vw, 5.6rem);
+  line-height: 1;
+  letter-spacing: -0.005em;
   margin-top: 1.2rem;
   text-wrap: balance;
 }
@@ -139,7 +148,7 @@ mark {
   --mk: 100%;
   color: var(--ink);
   background-color: transparent;
-  background-image: linear-gradient(var(--lime), var(--lime));
+  background-image: linear-gradient(var(--accent-soft), var(--accent-soft));
   background-repeat: no-repeat;
   background-position: 0 88%;
   background-size: var(--mk) 78%;
@@ -150,7 +159,8 @@ mark {
 }
 .hand {
   font-family: var(--hand);
-  font-weight: 600;
+  font-weight: 400;
+  color: var(--gold);
   font-size: clamp(1.5rem, 2vw, 1.9rem);
   line-height: 1;
 }
@@ -213,10 +223,10 @@ mark {
 }
 .btn-ink {
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
 }
 .btn-ink:hover {
-  background: var(--lime);
+  background: var(--accent);
   color: var(--ink);
 }
 .btn-line {
@@ -226,11 +236,11 @@ mark {
 .btn-line:hover {
   background: var(--white);
 }
-.btn-lime {
-  background: var(--lime);
+.btn-accent {
+  background: var(--accent);
   color: var(--ink);
 }
-.btn-lime:hover {
+.btn-accent:hover {
   background: var(--white);
 }
 .btn-sm {
@@ -254,7 +264,7 @@ mark {
   justify-content: space-between;
   padding: var(--pad);
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
   clip-path: inset(0 0 0 0);
   animation: loader-failsafe 0.01s 6s forwards;
 }
@@ -269,7 +279,7 @@ mark {
   font-family: var(--mono);
   font-size: 0.78rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.12em;
 }
 .loader-bottom {
   display: flex;
@@ -279,12 +289,11 @@ mark {
 }
 .loader-num {
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
+  font-weight: 400;
   font-size: clamp(7rem, 26vw, 24rem);
-  line-height: 0.78;
-  letter-spacing: -0.03em;
-  color: var(--lime);
+  line-height: 1;
+  letter-spacing: -0.005em;
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
 .loader-name {
@@ -292,7 +301,7 @@ mark {
   font-size: 0.8rem;
   text-transform: uppercase;
   text-align: right;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.12em;
 }
 
 /* ---------- Cursor ---------- */
@@ -311,7 +320,7 @@ mark {
     height: 12px;
     margin: -6px 0 0 -6px;
     border-radius: 50%;
-    background: var(--lime);
+    background: var(--accent);
     border: 1px solid var(--ink);
     pointer-events: none;
     transition:
@@ -333,7 +342,7 @@ mark {
   font-size: 0.6rem;
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.12em;
   color: var(--ink);
   opacity: 0;
   transition: opacity 0.2s;
@@ -356,11 +365,11 @@ mark {
   height: var(--ticker-h);
   overflow: hidden;
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
   font-family: var(--mono);
   font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.12em;
   transition:
     height 0.5s var(--ease),
     opacity 0.4s;
@@ -383,7 +392,7 @@ mark {
 }
 .ticker i {
   font-style: normal;
-  color: var(--lime);
+  color: var(--gold);
 }
 @keyframes marquee {
   to {
@@ -402,7 +411,7 @@ mark {
     border-color 0.3s;
 }
 .header.is-scrolled .nav {
-  background: rgba(241, 237, 228, 0.88);
+  background: rgba(255, 241, 248, 0.88);
   backdrop-filter: blur(14px) saturate(1.3);
   -webkit-backdrop-filter: blur(14px) saturate(1.3);
   border-color: var(--line);
@@ -412,11 +421,10 @@ mark {
   align-items: flex-start;
   gap: 0.2rem;
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
-  font-size: 1.6rem;
+  font-weight: 400;
+  font-size: 1.85rem;
   line-height: 1;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.005em;
   white-space: nowrap;
 }
 .logo-dot {
@@ -424,7 +432,7 @@ mark {
   height: 0.38em;
   margin-top: 0.05em;
   border-radius: 50%;
-  background: var(--lime);
+  background: var(--accent);
   border: 1.5px solid var(--ink);
 }
 .nav-links {
@@ -434,7 +442,7 @@ mark {
   font-family: var(--mono);
   font-size: 0.74rem;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.1em;
 }
 .nav-links a {
   padding: 0.45rem 0.7rem;
@@ -442,7 +450,7 @@ mark {
   transition: background-color 0.25s;
 }
 .nav-links a:hover {
-  background: var(--lime);
+  background: var(--accent-soft);
 }
 .menu-btn {
   display: none;
@@ -455,7 +463,7 @@ mark {
   font-family: var(--mono);
   font-size: 0.74rem;
   text-transform: uppercase;
-  background: var(--bone);
+  background: var(--bg);
 }
 .menu-btn-lines {
   position: relative;
@@ -479,7 +487,7 @@ mark {
   top: 6.5px;
 }
 .menu-open .menu-btn {
-  background: var(--lime);
+  background: var(--accent-soft);
 }
 .menu-open .menu-btn-lines i:first-child {
   top: 3.25px;
@@ -510,7 +518,7 @@ mark {
   gap: 2rem;
   padding: calc(var(--ticker-h) + var(--nav-h) + 24px) var(--pad) 32px;
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
   clip-path: inset(0 0 100% 0);
   visibility: hidden;
   transition:
@@ -525,7 +533,7 @@ mark {
     visibility 0s;
 }
 .menu-open .header .nav {
-  background: var(--bone);
+  background: var(--bg);
 }
 .mobile-menu nav a {
   display: flex;
@@ -534,21 +542,20 @@ mark {
   padding: 0.3rem 0;
   border-bottom: 1px solid var(--line-inv);
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 700;
+  font-weight: 400;
   font-size: clamp(2.6rem, 12vw, 4.4rem);
   line-height: 1.05;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.005em;
   transition: color 0.25s;
 }
 .mobile-menu nav a:hover {
-  color: var(--lime);
+  color: var(--accent);
 }
 .mobile-menu nav span {
   font-family: var(--mono);
   font-size: 0.75rem;
   font-weight: 400;
-  color: var(--lime);
+  color: var(--accent);
 }
 .mobile-menu-foot {
   display: flex;
@@ -573,7 +580,7 @@ mark {
   position: relative;
   min-height: 100svh;
   padding: calc(var(--ticker-h) + var(--nav-h) + clamp(28px, 5vw, 64px)) 0 clamp(48px, 6vw, 88px);
-  background: var(--bone);
+  background: var(--bg);
   overflow: clip;
 }
 .hero-grid {
@@ -589,11 +596,10 @@ mark {
 .hero-title {
   margin-top: clamp(1rem, 2vw, 1.8rem);
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
-  font-size: clamp(3.6rem, 9.4vw, 11rem);
-  line-height: 0.84;
-  letter-spacing: -0.022em;
+  font-weight: 400;
+  font-size: clamp(3rem, 7.2vw, 8.4rem);
+  line-height: 1;
+  letter-spacing: -0.005em;
 }
 .hero-title .line {
   display: block;
@@ -637,7 +643,7 @@ mark {
   border: 7px solid var(--ink);
   border-radius: 34px;
   background: var(--ink);
-  box-shadow: 0 60px 90px -50px rgba(13, 13, 13, 0.6);
+  box-shadow: 0 60px 90px -50px rgba(25, 24, 44, 0.6);
 }
 .reel img {
   position: absolute;
@@ -724,10 +730,10 @@ mark {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: var(--lime);
+  background: var(--accent);
   color: var(--ink);
   font-family: var(--display);
-  font-weight: 800;
+  font-weight: 400;
   font-size: 0.95rem;
   box-shadow: 0 0 0 2px #fff;
 }
@@ -774,12 +780,11 @@ mark {
   padding: 0.6rem 0.95rem;
   border: 2px solid var(--ink);
   border-radius: 14px;
-  background: var(--lime);
+  background: var(--accent);
   box-shadow: 4px 4px 0 var(--ink);
-  font-family: var(--display);
-  font-stretch: 85%;
-  font-weight: 700;
-  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(0.85rem, 1vw, 0.95rem);
   line-height: 1;
   white-space: nowrap;
   cursor: grab;
@@ -805,14 +810,14 @@ mark {
   left: -12%;
   rotate: -4deg;
   background: var(--ink);
-  color: var(--lime);
-  box-shadow: 4px 4px 0 var(--lime);
+  color: var(--accent);
+  box-shadow: 4px 4px 0 var(--accent);
 }
 .hand-hero {
   position: absolute;
-  top: 3%;
-  left: -30%;
-  rotate: -8deg;
+  top: -6%;
+  left: -16%;
+  rotate: -6deg;
   white-space: nowrap;
   pointer-events: none;
 }
@@ -855,7 +860,7 @@ mark {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
 }
 .stat {
   padding: clamp(28px, 4vw, 56px) var(--pad);
@@ -867,19 +872,18 @@ mark {
 .stat-n {
   display: block;
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
+  font-weight: 400;
   font-size: clamp(3.2rem, 6.5vw, 7rem);
-  line-height: 0.85;
-  letter-spacing: -0.02em;
-  color: var(--lime);
+  line-height: 1;
+  letter-spacing: -0.005em;
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
 .stat-n small {
   margin-left: 0.2em;
   font-size: 0.32em;
   letter-spacing: 0;
-  color: var(--bone);
+  color: var(--bg);
 }
 .stat-l {
   display: block;
@@ -887,7 +891,7 @@ mark {
   font-family: var(--mono);
   font-size: 0.74rem;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.12em;
   color: var(--mute-inv);
 }
 @media (max-width: 900px) {
@@ -904,7 +908,7 @@ mark {
 
 /* ---------- Resultados ---------- */
 .results {
-  background: var(--paper);
+  background: var(--bg-2);
 }
 .results-grid {
   display: grid;
@@ -925,14 +929,13 @@ mark {
   display: block;
   margin-top: 0.4rem;
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
+  font-weight: 400;
   font-size: clamp(2.6rem, 4.6vw, 4.8rem);
-  line-height: 0.85;
-  letter-spacing: -0.02em;
+  line-height: 1;
+  letter-spacing: -0.005em;
 }
 .ba-nums .is-after {
-  background: var(--lime);
+  background: var(--accent-soft);
   padding: 0.04em 0.12em 0;
 }
 .ba-arrow {
@@ -991,7 +994,7 @@ mark {
   height: 52px;
   border: 2px solid var(--ink);
   border-radius: 50%;
-  background: var(--lime);
+  background: var(--accent);
   font-size: 1.3rem;
 }
 .compare-tag {
@@ -1008,11 +1011,11 @@ mark {
 .tag-before {
   left: 14px;
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
 }
 .tag-after {
   right: 14px;
-  background: var(--lime);
+  background: var(--accent);
   color: var(--ink);
   border: 1px solid var(--ink);
 }
@@ -1043,7 +1046,7 @@ mark {
 
 /* ---------- Problema ---------- */
 .problem {
-  background: var(--bone);
+  background: var(--bg);
 }
 .problem-grid {
   display: grid;
@@ -1081,7 +1084,7 @@ mark {
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 18px 40px -26px rgba(13, 13, 13, 0.4);
+  box-shadow: 0 18px 40px -26px rgba(25, 24, 44, 0.4);
   transition:
     translate 0.4s var(--ease),
     background-color 0.3s;
@@ -1100,7 +1103,7 @@ mark {
   height: 46px;
   border-radius: 13px;
   background: var(--ink);
-  color: var(--lime);
+  color: var(--accent);
 }
 .notif-ic .ic {
   width: 22px;
@@ -1137,7 +1140,7 @@ mark {
 .method {
   padding-top: var(--sec);
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
 }
 .method .lead {
   color: var(--mute-inv);
@@ -1194,20 +1197,18 @@ mark {
 }
 .panel-n {
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
+  font-weight: 400;
   font-size: clamp(4.2rem, 7vw, 7.5rem);
-  line-height: 0.78;
-  letter-spacing: -0.03em;
-  color: var(--lime);
+  line-height: 1;
+  letter-spacing: -0.005em;
+  color: var(--accent);
 }
 .panel h3 {
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 700;
+  font-weight: 400;
   font-size: clamp(2.2rem, 3.4vw, 3.6rem);
-  line-height: 0.92;
-  letter-spacing: -0.015em;
+  line-height: 1;
+  letter-spacing: -0.005em;
 }
 .panel-body p {
   max-width: 420px;
@@ -1216,9 +1217,9 @@ mark {
 }
 .panel-cta {
   justify-content: flex-end;
-  background: var(--lime);
+  background: var(--accent);
   color: var(--ink);
-  border-color: var(--lime);
+  border-color: var(--accent);
   transition: background-color 0.3s;
 }
 .panel-cta:hover {
@@ -1230,11 +1231,10 @@ mark {
   justify-content: space-between;
   gap: 1rem;
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
+  font-weight: 400;
   font-size: clamp(2.6rem, 4.4vw, 4.8rem);
-  line-height: 0.88;
-  letter-spacing: -0.02em;
+  line-height: 1;
+  letter-spacing: -0.005em;
 }
 .panel-cta-text .ic {
   width: 0.8em;
@@ -1265,8 +1265,8 @@ mark {
   border: 1px solid var(--line-inv);
 }
 .viz-cal i.on {
-  background: var(--lime);
-  border-color: var(--lime);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 .viz-script {
   gap: 14px;
@@ -1280,20 +1280,20 @@ mark {
   border-radius: 14px;
 }
 .sc-row:first-child {
-  border-color: var(--lime);
+  border-color: var(--accent);
 }
 .sc-tag {
   font-family: var(--mono);
   font-size: 0.66rem;
   text-transform: uppercase;
-  color: var(--lime);
+  color: var(--accent);
 }
 .sc-row i {
   display: block;
   width: var(--w);
   height: 7px;
   border-radius: 4px;
-  background: rgba(241, 237, 228, 0.22);
+  background: rgba(255, 241, 248, 0.22);
 }
 .viz-tl {
   position: relative;
@@ -1302,7 +1302,7 @@ mark {
   padding: 14px;
   border: 1px solid var(--line-inv);
   border-radius: 16px;
-  background: #101010;
+  background: #141327;
   overflow: hidden;
 }
 .tl-ruler {
@@ -1336,14 +1336,14 @@ mark {
   left: var(--s);
   right: calc(100% - var(--e));
   border-radius: 6px;
-  background: var(--lime);
+  background: var(--accent);
 }
 .tl-clips b.t2 {
-  background: #f1ede4;
+  background: var(--bg);
 }
 .tl-clips b.t3 {
-  background: repeating-linear-gradient(90deg, #5c5c5c 0 2px, transparent 2px 5px);
-  border: 1px solid #5c5c5c;
+  background: repeating-linear-gradient(90deg, #535366 0 2px, transparent 2px 5px);
+  border: 1px solid #535366;
 }
 .tl-head {
   position: absolute;
@@ -1377,17 +1377,16 @@ mark {
   height: 22px;
   padding: 3px;
   border-radius: 50%;
-  background: var(--lime);
+  background: var(--accent);
   color: var(--ink);
 }
 .promise {
   padding-block: clamp(24px, 4vw, 48px) var(--sec);
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 700;
+  font-weight: 400;
   font-size: clamp(2.4rem, 5.6vw, 6rem);
-  line-height: 0.92;
-  letter-spacing: -0.015em;
+  line-height: 1;
+  letter-spacing: -0.005em;
 }
 .promise mark {
   color: var(--ink);
@@ -1404,7 +1403,7 @@ mark {
 /* ---------- Testimonios ---------- */
 .testi {
   padding-block: clamp(56px, 7vw, 100px) var(--sec);
-  background: var(--lime);
+  background: var(--accent);
   overflow: clip;
 }
 .testi-marquee {
@@ -1418,11 +1417,10 @@ mark {
   gap: 2rem;
   width: max-content;
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
+  font-weight: 400;
   font-size: clamp(3.4rem, 9vw, 9rem);
-  line-height: 0.95;
-  letter-spacing: -0.02em;
+  line-height: 1;
+  letter-spacing: -0.005em;
   white-space: nowrap;
   animation: marquee 30s linear infinite;
 }
@@ -1466,7 +1464,7 @@ mark {
   padding: 0.8rem 1.1rem;
   border-radius: 999px;
   background: var(--ink);
-  color: var(--lime);
+  color: var(--accent);
   font-family: var(--mono);
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -1492,11 +1490,11 @@ mark {
   margin: 0;
   padding: 0;
   border: 0;
-  background: rgba(13, 13, 13, 0.97);
-  color: var(--bone);
+  background: rgba(25, 24, 44, 0.97);
+  color: var(--bg);
 }
 .lightbox::backdrop {
-  background: rgba(13, 13, 13, 0.6);
+  background: rgba(25, 24, 44, 0.6);
 }
 .lightbox[open] {
   display: flex;
@@ -1532,7 +1530,7 @@ mark {
     color 0.25s;
 }
 .lb-btn:hover {
-  background: var(--lime);
+  background: var(--accent);
   color: var(--ink);
 }
 .lb-btn:disabled {
@@ -1562,7 +1560,7 @@ mark {
 
 /* ---------- Planes ---------- */
 .plans {
-  background: var(--paper);
+  background: var(--bg-2);
 }
 .plans-head {
   display: grid;
@@ -1585,14 +1583,14 @@ mark {
   flex-direction: column;
   padding: clamp(20px, 2vw, 30px);
   outline: 1px solid var(--ink);
-  background: var(--paper);
+  background: var(--bg-2);
   transition: background-color 0.35s;
 }
 .plan:hover {
   background: var(--white);
 }
 .plan.is-featured {
-  background: var(--lime);
+  background: var(--accent-soft);
 }
 .plan-top {
   display: flex;
@@ -1611,16 +1609,15 @@ mark {
   padding: 0.3rem 0.6rem;
   border-radius: 999px;
   background: var(--ink);
-  color: var(--lime);
+  color: var(--accent);
 }
 .plan h3 {
   margin-top: 1.6rem;
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
+  font-weight: 400;
   font-size: clamp(2rem, 2.7vw, 2.9rem);
-  line-height: 0.9;
-  letter-spacing: -0.015em;
+  line-height: 1;
+  letter-spacing: -0.005em;
 }
 .plan-desc {
   margin-top: 0.7rem;
@@ -1642,17 +1639,16 @@ mark {
 .price-cur {
   margin-top: 0.3rem;
   font-family: var(--display);
-  font-weight: 700;
+  font-weight: 400;
   font-size: 1.5rem;
   line-height: 1;
 }
 .price-amt {
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
+  font-weight: 400;
   font-size: clamp(3.6rem, 5vw, 5.4rem);
-  line-height: 0.8;
-  letter-spacing: -0.022em;
+  line-height: 1;
+  letter-spacing: -0.005em;
   font-variant-numeric: tabular-nums;
 }
 .price-meta {
@@ -1694,7 +1690,7 @@ mark {
   margin-top: 0.05rem;
   border-radius: 50%;
   background: var(--ink);
-  color: var(--lime);
+  color: var(--accent);
 }
 .plan-foot {
   margin-top: auto;
@@ -1708,7 +1704,7 @@ mark {
   padding: 0.95rem 1.1rem;
   border-radius: 999px;
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
   font-size: 0.9rem;
   font-weight: 600;
   white-space: nowrap;
@@ -1720,7 +1716,7 @@ mark {
   transition: rotate 0.4s var(--ease);
 }
 .plan-cta:hover {
-  background: var(--lime);
+  background: var(--accent);
   color: var(--ink);
 }
 .plan-cta:hover .ic {
@@ -1773,7 +1769,7 @@ mark {
   margin-top: clamp(24px, 3vw, 40px);
   border-radius: 32px;
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
   overflow: hidden;
 }
 .badge-rot {
@@ -1795,20 +1791,19 @@ mark {
   border-right: 1px solid var(--line-inv);
 }
 .star-left > .label {
-  color: var(--lime);
+  color: var(--accent);
 }
 .star h3 {
   margin-top: 1.2rem;
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
-  font-size: clamp(4rem, 9vw, 9.5rem);
-  line-height: 0.8;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  font-size: clamp(3.4rem, 7vw, 7.6rem);
+  line-height: 1;
+  letter-spacing: -0.005em;
 }
 .star h3 span {
   display: block;
-  color: var(--lime);
+  color: var(--gold);
 }
 .star-sub {
   max-width: 420px;
@@ -1823,7 +1818,7 @@ mark {
   border-color: var(--line-inv);
 }
 .price-inv .price-amt {
-  color: var(--lime);
+  color: var(--accent);
 }
 .price-inv .price-meta s {
   color: var(--mute-inv);
@@ -1840,8 +1835,8 @@ mark {
   min-width: 4.2ch;
 }
 .cd b {
-  font-family: var(--mono);
-  font-weight: 500;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(2.4rem, 4.4vw, 4rem);
   line-height: 1;
   font-variant-numeric: tabular-nums;
@@ -1858,7 +1853,7 @@ mark {
   font-style: normal;
   font-size: clamp(2rem, 3.6vw, 3.2rem);
   line-height: 1.1;
-  color: var(--lime);
+  color: var(--gold);
 }
 .cd-note {
   margin-top: 0.8rem;
@@ -1872,17 +1867,17 @@ mark {
   padding-top: clamp(120px, 12vw, 180px);
 }
 .star-right > p:not(.label) {
-  color: rgba(241, 237, 228, 0.78);
+  color: rgba(255, 241, 248, 0.78);
 }
 .star-right > p + p {
   margin-top: 1rem;
 }
 .star-right strong {
-  color: var(--bone);
+  color: var(--bg);
 }
 .star-h {
   margin-top: 2rem;
-  color: var(--lime);
+  color: var(--accent);
 }
 .star .plan-list {
   margin-top: 0.6rem;
@@ -1891,15 +1886,15 @@ mark {
   border-color: var(--line-inv);
 }
 .star .plan-list .ic {
-  background: var(--lime);
+  background: var(--accent);
   color: var(--ink);
 }
 .star .btn {
   margin-top: 2rem;
-  border-color: var(--lime);
+  border-color: var(--accent);
 }
 .star .btn:hover {
-  box-shadow: 4px 4px 0 var(--lime);
+  box-shadow: 4px 4px 0 var(--accent);
 }
 .star .secure {
   color: var(--mute-inv);
@@ -1934,7 +1929,7 @@ mark {
 
 /* ---------- Preguntas ---------- */
 .faq {
-  background: var(--bone);
+  background: var(--bg);
 }
 .faq-grid {
   display: grid;
@@ -1947,7 +1942,7 @@ mark {
   top: calc(var(--nav-h) + 40px);
 }
 .faq-head .h2 {
-  font-size: clamp(2.6rem, 4.8vw, 5rem);
+  font-size: clamp(2.3rem, 4.2vw, 4.4rem);
 }
 .faq-head > p:not(.label) {
   margin-top: 1.3rem;
@@ -1961,7 +1956,7 @@ mark {
   padding: 1.4rem;
   border: 1.5px solid var(--ink);
   border-radius: 22px;
-  background: var(--lime);
+  background: var(--accent-soft);
 }
 .faq-cta p {
   font-weight: 500;
@@ -1990,12 +1985,11 @@ mark {
   color: var(--mute);
 }
 .qa-q {
-  font-family: var(--display);
-  font-stretch: 85%;
-  font-weight: 600;
-  font-size: clamp(1.25rem, 1.9vw, 1.65rem);
-  line-height: 1.15;
-  letter-spacing: -0.015em;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.35;
+  letter-spacing: 0;
   transition: translate 0.35s var(--ease);
 }
 .qa summary:hover .qa-q {
@@ -2026,7 +2020,7 @@ mark {
 }
 .qa.is-open .qa-ic,
 html:not(.js) .qa[open] .qa-ic {
-  background: var(--lime);
+  background: var(--accent-soft);
 }
 .qa.is-open .qa-ic::after,
 html:not(.js) .qa[open] .qa-ic::after {
@@ -2056,11 +2050,11 @@ html:not(.js) .qa[open] .qa-ic::after {
 
 /* ---------- Cierre ---------- */
 .closing {
-  background: var(--paper);
+  background: var(--bg-2);
 }
 .closing-title {
   max-width: 15ch;
-  font-size: clamp(3rem, 7.6vw, 8.4rem);
+  font-size: clamp(2.6rem, 6vw, 6.6rem);
 }
 .closing-cols {
   display: grid;
@@ -2079,7 +2073,7 @@ html:not(.js) .qa[open] .qa-ic::after {
   padding: 0.8rem 1.2rem;
   border: 1.5px solid var(--ink);
   border-radius: 999px;
-  background: var(--lime);
+  background: var(--accent-soft);
   font-weight: 600;
   line-height: 1.35;
 }
@@ -2104,17 +2098,16 @@ html:not(.js) .qa[open] .qa-ic::after {
 .path h3 {
   margin-top: auto;
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
+  font-weight: 400;
   font-size: clamp(2.4rem, 4.6vw, 4.8rem);
-  line-height: 0.88;
-  letter-spacing: -0.02em;
+  line-height: 1;
+  letter-spacing: -0.005em;
 }
 .path p {
   max-width: 420px;
 }
 .path-a {
-  border: 1.5px dashed rgba(13, 13, 13, 0.35);
+  border: 1.5px dashed rgba(25, 24, 44, 0.35);
   color: var(--mute);
 }
 .path-a h3 {
@@ -2123,10 +2116,10 @@ html:not(.js) .qa[open] .qa-ic::after {
 }
 .path-b {
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
 }
 .path-b .label {
-  color: var(--lime);
+  color: var(--accent);
 }
 .path-b mark {
   color: var(--ink);
@@ -2148,12 +2141,12 @@ html:not(.js) .qa[open] .qa-ic::after {
 .final {
   padding-block: var(--sec);
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
   text-align: center;
   overflow: clip;
 }
 .final-hand {
-  color: var(--lime);
+  color: var(--gold);
   font-size: clamp(1.8rem, 3vw, 2.8rem);
   rotate: -3deg;
 }
@@ -2161,11 +2154,10 @@ html:not(.js) .qa[open] .qa-ic::after {
   display: inline-block;
   margin-top: 1rem;
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
-  font-size: clamp(4rem, 15vw, 17rem);
-  line-height: 0.8;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  font-size: clamp(3.2rem, 11vw, 12rem);
+  line-height: 1;
+  letter-spacing: -0.005em;
   transition: color 0.35s;
 }
 .final-big .line {
@@ -2182,15 +2174,15 @@ html:not(.js) .qa[open] .qa-ic::after {
   width: 0.62em;
   height: 0.62em;
   margin-bottom: 0.08em;
-  color: var(--lime);
+  color: var(--accent);
   transition: rotate 0.5s var(--ease);
 }
 .final-big:hover {
-  color: var(--lime);
+  color: var(--accent);
 }
 .final-big:hover .ic {
   rotate: 45deg;
-  color: var(--bone);
+  color: var(--bg);
 }
 .final-info {
   display: grid;
@@ -2205,11 +2197,11 @@ html:not(.js) .qa[open] .qa-ic::after {
 .final-info .small {
   font-size: 0.88rem;
 }
-.final .btn-lime {
-  border-color: var(--lime);
+.final .btn-accent {
+  border-color: var(--accent);
 }
-.final .btn-lime:hover {
-  box-shadow: 4px 4px 0 var(--lime);
+.final .btn-accent:hover {
+  box-shadow: 4px 4px 0 var(--accent);
 }
 .link-wa {
   display: inline-flex;
@@ -2218,14 +2210,14 @@ html:not(.js) .qa[open] .qa-ic::after {
   padding-bottom: 2px;
   border-bottom: 1px solid currentColor;
   font-weight: 500;
-  color: var(--lime);
+  color: var(--accent);
 }
 
 /* ---------- Footer ---------- */
 .footer {
   padding-block: clamp(32px, 4vw, 56px) 24px;
   background: var(--ink);
-  color: var(--bone);
+  color: var(--bg);
   border-top: 1px solid var(--line-inv);
   overflow: hidden;
 }
@@ -2252,13 +2244,13 @@ html:not(.js) .qa[open] .qa-ic::after {
   font-family: var(--mono);
   font-size: 0.72rem;
   text-transform: uppercase;
-  color: var(--bone);
+  color: var(--bg);
   transition:
     background-color 0.25s,
     color 0.25s;
 }
 .footer-links a:hover {
-  background: var(--lime);
+  background: var(--accent);
   color: var(--ink);
 }
 .footer-big {
@@ -2266,13 +2258,12 @@ html:not(.js) .qa[open] .qa-ic::after {
   margin-top: clamp(32px, 5vw, 72px);
   overflow: hidden;
   font-family: var(--display);
-  font-stretch: 75%;
-  font-weight: 800;
-  font-size: clamp(3.2rem, 14.5vw, 16rem);
-  line-height: 0.82;
-  letter-spacing: -0.03em;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 10.5vw, 12rem);
+  line-height: 1;
+  letter-spacing: -0.005em;
   white-space: nowrap;
-  color: var(--lime);
+  color: var(--accent);
   transition: color 0.35s;
 }
 .footer-big span {
@@ -2280,7 +2271,7 @@ html:not(.js) .qa[open] .qa-ic::after {
   padding-bottom: 0.2em;
 }
 .footer-big:hover {
-  color: var(--bone);
+  color: var(--bg);
 }
 .copy {
   margin-top: 1.6rem;
