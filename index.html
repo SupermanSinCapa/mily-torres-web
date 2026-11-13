@@ -46,7 +46,6 @@
       <symbol id="i-comment" viewBox="0 0 24 24"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.6 7.4L3.5 20l1.2-4.1A8.5 8.5 0 1 1 20.5 11.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></symbol>
       <symbol id="i-send" viewBox="0 0 24 24"><path d="M21 3L10 14M21 3l-6.5 18-4.5-7-7-4.5L21 3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></symbol>
       <symbol id="i-music" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="18" r="2.5" /><circle cx="17" cy="16" r="2.5" /><path d="M9.5 18V5l10-2v13" /></g></symbol>
-      <symbol id="i-verified" viewBox="0 0 24 24"><path d="M12 2l2.4 1.8 3-.2.9 2.9 2.5 1.7-1 2.8 1 2.8-2.5 1.7-.9 2.9-3-.2L12 22l-2.4-1.8-3 .2-.9-2.9-2.5-1.7 1-2.8-1-2.8 2.5-1.7.9-2.9 3 .2z" fill="#3897f0" /><path d="M8.5 12.2l2.3 2.3 4.7-4.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
       <symbol id="i-ig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /></g><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" /></symbol>
       <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2-1.42.25-.69.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41z" /></symbol>
     </svg>
@@ -58,7 +57,7 @@
         <span>@bymilytorres</span>
       </div>
       <div class="loader-bottom">
-        <span class="loader-num" data-loader-num>0</span>
+        <span class="loader-num"><span>Mily Torres</span></span>
         <span class="loader-name">Contenido<br />que vende</span>
       </div>
     </div>
@@ -136,7 +135,7 @@
             <div class="reel">
               <div class="reel-bars" aria-hidden="true"><span class="is-done"></span><span class="is-active"></span><span></span></div>
               <div class="reel-head" aria-hidden="true">
-                <span class="avatar">M</span><b>bymilytorres</b><svg class="ic"><use href="#i-verified" /></svg>
+                <span class="avatar">M</span><b>bymilytorres</b>
               </div>
               <img
                 src="/img/banner-asesorias.png"
@@ -164,7 +163,7 @@
       <!-- CIFRAS -->
       <section class="stats" aria-label="Cifras">
         <div class="stat"><span class="stat-n">+<span data-count="250">250</span></span><span class="stat-l">Asesorías realizadas</span></div>
-        <div class="stat"><span class="stat-n"><span data-count="22.4" data-decimals="1">22,4</span>K</span><span class="stat-l">Seguidores en mi cuenta</span></div>
+        <div class="stat"><span class="stat-n"><span data-count="22.4" data-decimals="1">22,4</span><small>mil</small></span><span class="stat-l">Seguidores en mi cuenta</span></div>
         <div class="stat"><span class="stat-n"><span data-count="90">90</span><small>días</small></span><span class="stat-l">De 1.253 a 22,4 mil</span></div>
         <div class="stat"><span class="stat-n">1:1</span><span class="stat-l">Por Zoom · aprox. 2 h</span></div>
       </section>
@@ -229,23 +228,23 @@
           <div class="notifs">
             <div class="notif">
               <span class="notif-ic"><svg class="ic"><use href="#i-cal" /></svg></span>
-              <div><p class="notif-top"><span>Tu cuenta</span><span>ahora</span></p><p>No sabes qué publicar y cada semana empiezas desde cero</p></div>
+              <div><p class="notif-top"><span>Tu cuenta</span></p><p>No sabes qué publicar y cada semana empiezas desde cero</p></div>
             </div>
             <div class="notif">
               <span class="notif-ic"><svg class="ic"><use href="#i-timer" /></svg></span>
-              <div><p class="notif-top"><span>Tu cuenta</span><span>2 min</span></p><p>Tus reels pierden a la gente en los primeros segundos</p></div>
+              <div><p class="notif-top"><span>Tu cuenta</span></p><p>Tus reels pierden a la gente en los primeros segundos</p></div>
             </div>
             <div class="notif">
               <span class="notif-ic"><svg class="ic"><use href="#i-scissors" /></svg></span>
-              <div><p class="notif-top"><span>Tu cuenta</span><span>15 min</span></p><p>Editas por intuición y tardas demasiado</p></div>
+              <div><p class="notif-top"><span>Tu cuenta</span></p><p>Editas por intuición y tardas demasiado</p></div>
             </div>
             <div class="notif">
               <span class="notif-ic"><svg class="ic"><use href="#i-userx" /></svg></span>
-              <div><p class="notif-top"><span>Tu cuenta</span><span>1 h</span></p><p>Tu biografía no explica qué vendes ni por qué elegirte</p></div>
+              <div><p class="notif-top"><span>Tu cuenta</span></p><p>Tu biografía no explica qué vendes ni por qué elegirte</p></div>
             </div>
             <div class="notif">
               <span class="notif-ic"><svg class="ic"><use href="#i-bulb" /></svg></span>
-              <div><p class="notif-top"><span>Tu cuenta</span><span>ayer</span></p><p>Tienes conocimiento valioso, pero no sabes convertirlo en un producto</p></div>
+              <div><p class="notif-top"><span>Tu cuenta</span></p><p>Tienes conocimiento valioso, pero no sabes convertirlo en un producto</p></div>
             </div>
           </div>
         </div>
@@ -281,7 +280,7 @@
             <article class="panel">
               <div class="panel-top"><span class="panel-n">02</span><span class="label">Sesión 1 a 1</span></div>
               <div class="viz viz-script" aria-hidden="true">
-                <div class="sc-row"><span class="sc-tag">Hook · 0–3 s</span><i style="--w: 92%"></i><i style="--w: 64%"></i></div>
+                <div class="sc-row"><span class="sc-tag">Hook</span><i style="--w: 92%"></i><i style="--w: 64%"></i></div>
                 <div class="sc-row"><span class="sc-tag">Desarrollo</span><i style="--w: 100%"></i><i style="--w: 84%"></i><i style="--w: 70%"></i></div>
                 <div class="sc-row"><span class="sc-tag">Llamado a la acción</span><i style="--w: 56%"></i></div>
               </div>
@@ -294,7 +293,6 @@
             <article class="panel">
               <div class="panel-top"><span class="panel-n">03</span><span class="label">Sesión 1 a 1</span></div>
               <div class="viz viz-tl" aria-hidden="true">
-                <div class="tl-ruler"><span>00:00</span><span>00:05</span><span>00:10</span><span>00:15</span></div>
                 <div class="tl-track"><span class="tl-name">Video</span><div class="tl-clips"><b style="--s: 0%; --e: 36%"></b><b style="--s: 38%; --e: 70%"></b><b style="--s: 72%; --e: 100%"></b></div></div>
                 <div class="tl-track"><span class="tl-name">Texto</span><div class="tl-clips"><b class="t2" style="--s: 4%; --e: 30%"></b><b class="t2" style="--s: 44%; --e: 66%"></b><b class="t2" style="--s: 78%; --e: 96%"></b></div></div>
                 <div class="tl-track"><span class="tl-name">Audio</span><div class="tl-clips"><b class="t3" style="--s: 0%; --e: 100%"></b></div></div>

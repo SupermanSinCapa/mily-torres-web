@@ -288,13 +288,17 @@ mark {
   gap: 1rem;
 }
 .loader-num {
+  display: block;
+  overflow: hidden;
   font-family: var(--display);
   font-weight: 400;
-  font-size: clamp(7rem, 26vw, 24rem);
-  line-height: 1;
+  font-size: clamp(3.4rem, 11vw, 11rem);
+  line-height: 1.05;
   letter-spacing: -0.005em;
   color: var(--accent);
-  font-variant-numeric: tabular-nums;
+}
+.loader-num > span {
+  display: block;
 }
 .loader-name {
   font-family: var(--mono);

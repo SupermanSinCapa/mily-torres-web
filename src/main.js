@@ -223,12 +223,10 @@ if (reduceMotion) {
   const loader = $('.loader');
   if (loader) {
     lenis?.stop();
-    const num = $('[data-loader-num]');
-    const c = { v: 0 };
     intro
-      .from('.loader-top, .loader-name', { opacity: 0, duration: 0.6 })
-      .to(c, { v: 100, duration: 1.3, ease: 'power2.inOut', onUpdate: () => (num.textContent = Math.round(c.v)) }, 0)
-      .to(loader, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1, ease: 'expo.inOut' }, '+=0.1')
+      .from('.loader-num > span', { yPercent: 110, duration: 1.2 })
+      .from('.loader-top, .loader-name', { opacity: 0, duration: 0.8 }, '-=0.8')
+      .to(loader, { clipPath: 'inset(0% 0% 100% 0%)', duration: 1, ease: 'expo.inOut' }, '+=0.3')
       .add(() => {
         loader.remove();
         lenis?.start();
